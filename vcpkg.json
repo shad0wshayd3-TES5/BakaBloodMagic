@@ -1,0 +1,11 @@
+{
+  "name": "bakaplugintemplate",
+  "version-string": "1.0.0",
+  "license": "MIT",
+  "dependencies": [
+    "boost-stl-interfaces",
+    "rsm-binary-io",
+    "spdlog",
+    "xbyak"
+  ]
+}
