@@ -6,6 +6,7 @@
 #include "BloodMagic/Forms.h"
 #include "BloodMagic/HUDMenu.h"
 #include "BloodMagic/Papyrus.h"
+
 // #include "BloodMagic/MagicCaster.h"
 
 namespace BloodMagic

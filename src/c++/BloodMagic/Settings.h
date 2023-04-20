@@ -11,7 +11,7 @@ namespace BloodMagic
 			inline static bool bBloodMagicActive{ true };
 			inline static bool bGraveRobberDefault{ true };
 		};
-		
+
 		class Modifiers
 		{
 		public:
@@ -109,7 +109,7 @@ namespace BloodMagic
 		inline static CSimpleIniA m_ini_base{ true };
 		inline static CSimpleIniA m_ini_user{ true };
 
-		inline static constexpr char BASE_INI[] = "Data/MCM/Config/BloodMagic/settings.ini" ;
+		inline static constexpr char BASE_INI[] = "Data/MCM/Config/BloodMagic/settings.ini";
 		inline static constexpr char USER_INI[] = "Data/MCM/Settings/BloodMagic.ini";
 	};
 }
