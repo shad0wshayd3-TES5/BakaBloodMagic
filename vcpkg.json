@@ -1,10 +1,11 @@
 {
-  "name": "bakaplugintemplate",
+  "name": "bloodmagic",
   "version-string": "1.0.0",
   "license": "MIT",
   "dependencies": [
     "boost-stl-interfaces",
     "rsm-binary-io",
+    "simpleini",
     "spdlog",
     "xbyak"
   ]

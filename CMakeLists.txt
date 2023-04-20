@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-set(NAME "BakaPluginTemplate")
+set(NAME "BloodMagic")
 set(VERSION 1.0.0)
 set(AE_VERSION 1)
 

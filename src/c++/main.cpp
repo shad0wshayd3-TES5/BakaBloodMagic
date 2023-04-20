@@ -1,3 +1,5 @@
+#include "BloodMagic/BloodMagic.h"
+
 #ifdef SKYRIM_AE
 extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []()
 {
@@ -58,6 +60,19 @@ namespace
 
 		logger::info(FMT_STRING("{:s} v{:s}"), Version::PROJECT, Version::NAME);
 	}
+
+	void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
+	{
+		switch (a_msg->type)
+		{
+			case SKSE::MessagingInterface::kDataLoaded:
+				BloodMagic::Forms::Register();
+				break;
+
+			default:
+				break;
+		}
+	}
 }
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
@@ -66,6 +81,24 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	logger::info(FMT_STRING("{:s} loaded"), Version::PROJECT);
 
 	SKSE::Init(a_skse);
+	SKSE::AllocTrampoline(1 << 8);
+
+	const auto messaging = SKSE::GetMessagingInterface();
+	if (!messaging->RegisterListener("SKSE", MessageHandler))
+	{
+		logger::critical("Failed to register message callback");
+		return false;
+	}
+
+	const auto papyrus = SKSE::GetPapyrusInterface();
+	if (!papyrus->Register(BloodMagic::Papyrus::Register))
+	{
+		logger::critical("Failed to register papyrus callback");
+		return false;
+	}
+
+	BloodMagic::InstallHooks();
+	BloodMagic::Settings::Update();
 
 	return true;
 }
