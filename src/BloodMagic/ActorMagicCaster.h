@@ -16,26 +16,26 @@ namespace BloodMagic
 				RE::PlayerCharacter::GetSingleton()->PlayMagicFailureSound(a_this->currentSpell->GetSpellType());
 				switch (a_reason)
 				{
-					case RE::MagicSystem::CannotCastReason::kMagicka:
-						{
-							if (Settings::General::bBloodMagicActive)
-							{
-								Utils::FlashHealthMeter(a_this->actor);
-								break;
-							}
-
-							RE::HUDMenu::FlashMeter(RE::ActorValue::kMagicka);
-							break;
-						}
-
-					case RE::MagicSystem::CannotCastReason::kShoutWhileRecovering:
-						{
-							RE::HUDMenu::FlashMeter(RE::ActorValue::kVoiceRate);
-							break;
-						}
-
-					default:
+				case RE::MagicSystem::CannotCastReason::kMagicka:
+				{
+					if (Settings::General::bBloodMagicActive)
+					{
+						Utils::FlashHealthMeter(a_this->actor);
 						break;
+					}
+
+					RE::HUDMenu::FlashMeter(RE::ActorValue::kMagicka);
+					break;
+				}
+
+				case RE::MagicSystem::CannotCastReason::kShoutWhileRecovering:
+				{
+					RE::HUDMenu::FlashMeter(RE::ActorValue::kVoiceRate);
+					break;
+				}
+
+				default:
+					break;
 				}
 
 				Utils::ShowCannotCastReason(a_reason);
@@ -120,48 +120,48 @@ namespace BloodMagic
 
 			switch (a_spell->GetSpellType())
 			{
-				case RE::MagicSystem::SpellType::kSpell:
-				case RE::MagicSystem::SpellType::kDisease:
-				case RE::MagicSystem::SpellType::kPower:
-				case RE::MagicSystem::SpellType::kLesserPower:
-					{
-						a_this->actor->AddCastPower(a_spell);
-						break;
-					}
+			case RE::MagicSystem::SpellType::kSpell:
+			case RE::MagicSystem::SpellType::kDisease:
+			case RE::MagicSystem::SpellType::kPower:
+			case RE::MagicSystem::SpellType::kLesserPower:
+			{
+				a_this->actor->AddCastPower(a_spell);
+				break;
+			}
 
-				case RE::MagicSystem::SpellType::kVoicePower:
-					{
-						if (!a_this->actor->IsCurrentShout(a_spell))
-						{
-							break;
-						}
-
-						if (auto CurrentShout = a_this->actor->GetCurrentShout())
-						{
-							for (auto i = 0; i < 3; i++)
-							{
-								auto Variation = CurrentShout->variations[i];
-								if (Variation.spell)
-								{
-									a_this->actor->AddCastPower(Variation.spell);
-									continue;
-								}
-
-								break;
-							}
-						}
-
-						break;
-					}
-
-				case RE::MagicSystem::SpellType::kScroll:
-					{
-						a_this->actor->RemoveCastScroll(a_spell, a_this->castingSource);
-						break;
-					}
-
-				default:
+			case RE::MagicSystem::SpellType::kVoicePower:
+			{
+				if (!a_this->actor->IsCurrentShout(a_spell))
+				{
 					break;
+				}
+
+				if (auto CurrentShout = a_this->actor->GetCurrentShout())
+				{
+					for (auto i = 0; i < 3; i++)
+					{
+						auto Variation = CurrentShout->variations[i];
+						if (Variation.spell)
+						{
+							a_this->actor->AddCastPower(Variation.spell);
+							continue;
+						}
+
+						break;
+					}
+				}
+
+				break;
+			}
+
+			case RE::MagicSystem::SpellType::kScroll:
+			{
+				a_this->actor->RemoveCastScroll(a_spell, a_this->castingSource);
+				break;
+			}
+
+			default:
+				break;
 			}
 
 			if (!a_spell->IsFood() &&
@@ -258,39 +258,39 @@ namespace BloodMagic
 				auto bUsesResource{ false };
 				switch (a_this->state.get())
 				{
-					case RE::MagicCaster::State::kNone:
-					case RE::MagicCaster::State::kUnk01:
-						{
-							bUsesResource = ResourceAcV != RE::ActorValue::kNone;
-							break;
-						}
+				case RE::MagicCaster::State::kNone:
+				case RE::MagicCaster::State::kUnk01:
+				{
+					bUsesResource = ResourceAcV != RE::ActorValue::kNone;
+					break;
+				}
 
-					case RE::MagicCaster::State::kUnk04:
-						{
-							bUsesResource = RE::MagicUtilities::UsesResourceWhileCasting(a_spell, a_this->castingSource);
-							break;
-						}
+				case RE::MagicCaster::State::kUnk04:
+				{
+					bUsesResource = RE::MagicUtilities::UsesResourceWhileCasting(a_spell, a_this->castingSource);
+					break;
+				}
 
-					case RE::MagicCaster::State::kCharging:
-						{
-							bUsesResource = RE::MagicUtilities::UsesResourceOnRelease(a_spell, a_this->castingSource);
-							break;
-						}
+				case RE::MagicCaster::State::kCharging:
+				{
+					bUsesResource = RE::MagicUtilities::UsesResourceOnRelease(a_spell, a_this->castingSource);
+					break;
+				}
 
-					default:
-						break;
+				default:
+					break;
 				}
 
 				if (bUsesResource &&
 				    MagickaCost > 0.0f)
 				{
 					auto Magicka = (a_useBaseValueForCost)
-					                   ? Utils::GetBaseActorValue(a_this->actor, ResourceAcV)
-					                   : Utils::GetActorValue(a_this->actor, ResourceAcV);
+					                 ? Utils::GetBaseActorValue(a_this->actor, ResourceAcV)
+					                 : Utils::GetActorValue(a_this->actor, ResourceAcV);
 
 					bHasResource = (a_spell->GetCastingType() == RE::MagicSystem::CastingType::kConcentration)
-					                   ? Magicka > 0.0f
-					                   : bHasResource = Magicka >= MagickaCost;
+					                 ? Magicka > 0.0f
+					                 : bHasResource = Magicka >= MagickaCost;
 				}
 			}
 
@@ -359,106 +359,106 @@ namespace BloodMagic
 
 			switch (a_spell->GetSpellType())
 			{
-				case RE::MagicSystem::SpellType::kSpell:
-				case RE::MagicSystem::SpellType::kPoison:
-				case RE::MagicSystem::SpellType::kStaffEnchantment:
+			case RE::MagicSystem::SpellType::kSpell:
+			case RE::MagicSystem::SpellType::kPoison:
+			case RE::MagicSystem::SpellType::kStaffEnchantment:
+			{
+				if (a_spell->HasKeyword(BloodMagic::Forms::BloodMagic_RequiresBloodMagicActive))
+				{
+					if (!Utils::IsBloodMagicActive(a_this->actor))
 					{
-						if (a_spell->HasKeyword(BloodMagic::Forms::BloodMagic_RequiresBloodMagicActive))
-						{
-							if (!Utils::IsBloodMagicActive(a_this->actor))
-							{
-								Utils::SafeSet(a_reason, RE::MagicSystem::CannotCastReason::kOK);
-								return false;
-							}
-						}
-
-						if (bHasResource && !bBlockWhileShouting)
-						{
-							return true;
-						}
-
+						Utils::SafeSet(a_reason, RE::MagicSystem::CannotCastReason::kOK);
 						return false;
 					}
+				}
 
-				case RE::MagicSystem::SpellType::kPower:
-					{
-						if (a_this->actor->IsInCastPowerList(a_spell->As<RE::SpellItem>()))
-						{
-							Utils::SafeSet(a_reason, RE::MagicSystem::CannotCastReason::kPowerUsed);
-							return false;
-						}
-
-						if (bHasResource && !bBlockWhileShouting)
-						{
-							return true;
-						}
-
-						return false;
-					}
-
-				case RE::MagicSystem::SpellType::kLesserPower:
-					{
-						if (a_this->actor->IsInCastPowerList(a_spell->As<RE::SpellItem>()))
-						{
-							return false;
-						}
-
-						if (bHasResource && !bBlockWhileShouting)
-						{
-							return true;
-						}
-
-						return false;
-					}
-
-				case RE::MagicSystem::SpellType::kWortCraft:
-					{
-						if (a_alchStrength)
-						{
-							if (a_spell->IsFood())
-							{
-								*a_alchStrength = 0.0f;
-							}
-							else
-							{
-								auto AlchemyValue = a_this->actor->GetActorValue(RE::ActorValue::kAlchemy);
-								*a_alchStrength = RE::MagicFormulas::GetWortcraftEffectStrength(AlchemyValue);
-							}
-						}
-
-						return true;
-					}
-
-				case RE::MagicSystem::SpellType::kVoicePower:
-					{
-						if (bBlockShoutRecovery || bBlockMulticasting || bBlockWhileSCasting)
-						{
-							return false;
-						}
-
-						if (a_this->state.get() == RE::MagicCaster::State::kCharging &&
-						    a_this->actor->IsCurrentShout(a_spell->As<RE::SpellItem>()) &&
-						    a_this->actor->IsInCastPowerList(a_spell->As<RE::SpellItem>()))
-						{
-							Utils::SafeSet(a_reason, RE::MagicSystem::CannotCastReason::kPowerUsed);
-							return false;
-						}
-
-						return true;
-					}
-
-				case RE::MagicSystem::SpellType::kScroll:
-					{
-						if (!bBlockMulticasting && !bBlockWhileShouting)
-						{
-							return true;
-						}
-
-						return false;
-					}
-
-				default:
+				if (bHasResource && !bBlockWhileShouting)
+				{
 					return true;
+				}
+
+				return false;
+			}
+
+			case RE::MagicSystem::SpellType::kPower:
+			{
+				if (a_this->actor->IsInCastPowerList(a_spell->As<RE::SpellItem>()))
+				{
+					Utils::SafeSet(a_reason, RE::MagicSystem::CannotCastReason::kPowerUsed);
+					return false;
+				}
+
+				if (bHasResource && !bBlockWhileShouting)
+				{
+					return true;
+				}
+
+				return false;
+			}
+
+			case RE::MagicSystem::SpellType::kLesserPower:
+			{
+				if (a_this->actor->IsInCastPowerList(a_spell->As<RE::SpellItem>()))
+				{
+					return false;
+				}
+
+				if (bHasResource && !bBlockWhileShouting)
+				{
+					return true;
+				}
+
+				return false;
+			}
+
+			case RE::MagicSystem::SpellType::kWortCraft:
+			{
+				if (a_alchStrength)
+				{
+					if (a_spell->IsFood())
+					{
+						*a_alchStrength = 0.0f;
+					}
+					else
+					{
+						auto AlchemyValue = a_this->actor->GetActorValue(RE::ActorValue::kAlchemy);
+						*a_alchStrength = RE::MagicFormulas::GetWortcraftEffectStrength(AlchemyValue);
+					}
+				}
+
+				return true;
+			}
+
+			case RE::MagicSystem::SpellType::kVoicePower:
+			{
+				if (bBlockShoutRecovery || bBlockMulticasting || bBlockWhileSCasting)
+				{
+					return false;
+				}
+
+				if (a_this->state.get() == RE::MagicCaster::State::kCharging &&
+				    a_this->actor->IsCurrentShout(a_spell->As<RE::SpellItem>()) &&
+				    a_this->actor->IsInCastPowerList(a_spell->As<RE::SpellItem>()))
+				{
+					Utils::SafeSet(a_reason, RE::MagicSystem::CannotCastReason::kPowerUsed);
+					return false;
+				}
+
+				return true;
+			}
+
+			case RE::MagicSystem::SpellType::kScroll:
+			{
+				if (!bBlockMulticasting && !bBlockWhileShouting)
+				{
+					return true;
+				}
+
+				return false;
+			}
+
+			default:
+				return true;
 			}
 		}
 

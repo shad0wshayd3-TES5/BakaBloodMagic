@@ -9,7 +9,7 @@ namespace BloodMagic
 	class ActiveEffect
 	{
 	private:
-		template<class Effect>
+		template <class Effect>
 		class Hook
 		{
 		private:
@@ -37,22 +37,22 @@ namespace BloodMagic
 
 			switch (a_this->spell->GetSpellType())
 			{
-				case RE::MagicSystem::SpellType::kDisease:
-				case RE::MagicSystem::SpellType::kPower:
-				case RE::MagicSystem::SpellType::kLesserPower:
-				case RE::MagicSystem::SpellType::kAbility:
-				case RE::MagicSystem::SpellType::kPoison:
-				case RE::MagicSystem::SpellType::kEnchantment:
-				case RE::MagicSystem::SpellType::kPotion:
-				case RE::MagicSystem::SpellType::kWortCraft:
-				case RE::MagicSystem::SpellType::kAddiction:
-				case RE::MagicSystem::SpellType::kVoicePower:
-				case RE::MagicSystem::SpellType::kStaffEnchantment:
-				case RE::MagicSystem::SpellType::kScroll:
-					return;
+			case RE::MagicSystem::SpellType::kDisease:
+			case RE::MagicSystem::SpellType::kPower:
+			case RE::MagicSystem::SpellType::kLesserPower:
+			case RE::MagicSystem::SpellType::kAbility:
+			case RE::MagicSystem::SpellType::kPoison:
+			case RE::MagicSystem::SpellType::kEnchantment:
+			case RE::MagicSystem::SpellType::kPotion:
+			case RE::MagicSystem::SpellType::kWortCraft:
+			case RE::MagicSystem::SpellType::kAddiction:
+			case RE::MagicSystem::SpellType::kVoicePower:
+			case RE::MagicSystem::SpellType::kStaffEnchantment:
+			case RE::MagicSystem::SpellType::kScroll:
+				return;
 
-				default:
-					break;
+			default:
+				break;
 			}
 
 			if (a_this->effect && a_this->effect->baseEffect)

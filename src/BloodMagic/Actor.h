@@ -13,11 +13,11 @@ namespace BloodMagic
 			{
 				switch (a_actorValue)
 				{
-					case RE::ActorValue::kHealth:
-					case RE::ActorValue::kMagicka:
-						return true;
-					default:
-						break;
+				case RE::ActorValue::kHealth:
+				case RE::ActorValue::kMagicka:
+					return true;
+				default:
+					break;
 				}
 			}
 

@@ -14,21 +14,21 @@ namespace BloodMagic
 		{
 			switch (a_actorValue)
 			{
-				case RE::ActorValue::kMagicka:
-					{
-						if (Utils::IsBloodMagicActive(a_actor))
-						{
-							return a_actor->RestoreActorValue(
-								RE::ACTOR_VALUE_MODIFIER::kDamage,
-								RE::ActorValue::kHealth,
-								a_value * (1.0f / Settings::Modifiers::fBloodMagicCostScale));
-						}
+			case RE::ActorValue::kMagicka:
+			{
+				if (Utils::IsBloodMagicActive(a_actor))
+				{
+					return a_actor->RestoreActorValue(
+						RE::ACTOR_VALUE_MODIFIER::kDamage,
+						RE::ActorValue::kHealth,
+						a_value * (1.0f / Settings::Modifiers::fBloodMagicCostScale));
+				}
 
-						break;
-					}
+				break;
+			}
 
-				default:
-					break;
+			default:
+				break;
 			}
 
 			return a_actor->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, a_actorValue, a_value);
@@ -72,18 +72,18 @@ namespace BloodMagic
 		{
 			switch (a_actorValue)
 			{
-				case RE::ActorValue::kMagicka:
-					{
-						if (Utils::IsBloodMagicActive(a_actor))
-						{
-							return (a_actor->GetActorValue(RE::ActorValue::kHealth) * Settings::Modifiers::fBloodMagicCostScale);
-						}
+			case RE::ActorValue::kMagicka:
+			{
+				if (Utils::IsBloodMagicActive(a_actor))
+				{
+					return (a_actor->GetActorValue(RE::ActorValue::kHealth) * Settings::Modifiers::fBloodMagicCostScale);
+				}
 
-						break;
-					}
+				break;
+			}
 
-				default:
-					break;
+			default:
+				break;
 			}
 
 			return a_actor->GetActorValue(a_actorValue);
@@ -93,18 +93,18 @@ namespace BloodMagic
 		{
 			switch (a_actorValue)
 			{
-				case RE::ActorValue::kMagicka:
-					{
-						if (Utils::IsBloodMagicActive(a_actor))
-						{
-							return (a_actor->GetBaseActorValue(RE::ActorValue::kHealth) * Settings::Modifiers::fBloodMagicCostScale);
-						}
+			case RE::ActorValue::kMagicka:
+			{
+				if (Utils::IsBloodMagicActive(a_actor))
+				{
+					return (a_actor->GetBaseActorValue(RE::ActorValue::kHealth) * Settings::Modifiers::fBloodMagicCostScale);
+				}
 
-						break;
-					}
+				break;
+			}
 
-				default:
-					break;
+			default:
+				break;
 			}
 
 			return a_actor->GetBaseActorValue(a_actorValue);
@@ -143,17 +143,17 @@ namespace BloodMagic
 		{
 			switch (a_castingSource)
 			{
-				case RE::MagicSystem::CastingSource::kLeftHand:
-					RE::SourceActionMap::DoAction(a_actor, RE::DEFAULT_OBJECT::kActionLeftInterrupt);
-					break;
-				case RE::MagicSystem::CastingSource::kRightHand:
-					RE::SourceActionMap::DoAction(a_actor, RE::DEFAULT_OBJECT::kActionRightInterrupt);
-					break;
-				case RE::MagicSystem::CastingSource::kOther:
-					RE::SourceActionMap::DoAction(a_actor, RE::DEFAULT_OBJECT::kActionVoiceInterrupt);
-					break;
-				default:
-					break;
+			case RE::MagicSystem::CastingSource::kLeftHand:
+				RE::SourceActionMap::DoAction(a_actor, RE::DEFAULT_OBJECT::kActionLeftInterrupt);
+				break;
+			case RE::MagicSystem::CastingSource::kRightHand:
+				RE::SourceActionMap::DoAction(a_actor, RE::DEFAULT_OBJECT::kActionRightInterrupt);
+				break;
+			case RE::MagicSystem::CastingSource::kOther:
+				RE::SourceActionMap::DoAction(a_actor, RE::DEFAULT_OBJECT::kActionVoiceInterrupt);
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -163,7 +163,7 @@ namespace BloodMagic
 			       a_actor == RE::PlayerCharacter::GetSingleton();
 		}
 
-		template<typename T>
+		template <typename T>
 		inline static void SafeSet(T* a_ptr, T a_value)
 		{
 			if (a_ptr)
@@ -176,18 +176,18 @@ namespace BloodMagic
 		{
 			switch (a_reason)
 			{
-				case RE::MagicSystem::CannotCastReason::kMagicka:
-					{
-						if (Settings::General::bBloodMagicActive)
-						{
-							return RE::DebugNotification("You don't have enough Health", nullptr, true);
-						}
+			case RE::MagicSystem::CannotCastReason::kMagicka:
+			{
+				if (Settings::General::bBloodMagicActive)
+				{
+					return RE::DebugNotification("You don't have enough Health", nullptr, true);
+				}
 
-						break;
-					}
+				break;
+			}
 
-				default:
-					break;
+			default:
+				break;
 			}
 
 			auto CannotCastString = RE::MagicSystem::GetCannotCastString(a_reason);
