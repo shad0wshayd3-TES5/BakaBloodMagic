@@ -36,8 +36,8 @@ namespace BloodMagic
 	public:
 		static void InstallHooks()
 		{
-			REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(37516, 38461) };
-			stl::asm_replace(target.address(), OFFSET(0x94, 0x90), reinterpret_cast<std::uintptr_t>(UpdateRegenDelay));
+			static REL::Relocation target{ RELOCATION_ID(37516, 38461) };
+			target.replace_func(OFFSET(0x94, 0x90), UpdateRegenDelay);
 		}
 	};
 }

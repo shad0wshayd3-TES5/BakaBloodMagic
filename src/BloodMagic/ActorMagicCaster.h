@@ -316,7 +316,7 @@ namespace BloodMagic
 							if (BaseEffect->data.delivery == RE::MagicSystem::Delivery::kSelf &&
 							    BaseEffect->data.archetype == RE::EffectSetting::Archetype::kAccumulateMagnitude)
 							{
-								bBlockMulticasting = (ActiveCasters & ~(1 << stl::to_underlying(a_this->castingSource))) != 0;
+								bBlockMulticasting = (ActiveCasters & ~(1 << std::to_underlying(a_this->castingSource))) != 0;
 							}
 
 							bBlockWhileShouting = (ActiveCasters & 4) != 0 &&
@@ -569,6 +569,7 @@ namespace BloodMagic
 					return;
 				}
 
+				// todo: REX
 				if (GetTickCount64() < ReticuleController.nextUpdate)
 				{
 					return;

@@ -9,16 +9,16 @@ namespace BloodMagic
 	public:
 		static bool Register(RE::BSScript::IVirtualMachine* a_vm)
 		{
-			a_vm->RegisterFunction("GetVersion", CLASS_NAME, GetVersion, true);
-			a_vm->RegisterFunction("GraveRobberHeal", CLASS_NAME, GraveRobberHeal);
-			a_vm->RegisterFunction("UpdateSettings", CLASS_NAME, UpdateSettings);
-			logger::info(FMT_STRING("Registered funcs for class {:s}"), CLASS_NAME);
+			a_vm->RegisterFunction("GetVersion"sv, CLASS_NAME, GetVersion, true);
+			a_vm->RegisterFunction("GraveRobberHeal"sv, CLASS_NAME, GraveRobberHeal);
+			a_vm->RegisterFunction("UpdateSettings"sv, CLASS_NAME, UpdateSettings);
+			SKSE::log::info("Registered funcs for class {:s}"sv, CLASS_NAME);
 
 			return true;
 		}
 
 	private:
-		inline static constexpr char CLASS_NAME[] = "BloodMagicNative";
+		inline static constexpr auto CLASS_NAME{ "BloodMagicNative"sv };
 
 		enum
 		{
@@ -32,6 +32,7 @@ namespace BloodMagic
 
 		static void GraveRobberHeal(RE::StaticFunctionTag*, RE::Actor* a_actor)
 		{
+			/*
 			auto fHealthVal = a_actor->GetActorValue(RE::ActorValue::kHealth);
 			auto fHealthMax = a_actor->GetBaseActorValue(RE::ActorValue::kHealth) +
 			                  a_actor->GetActorValueModifier(RE::ACTOR_VALUE_MODIFIER::kPermanent, RE::ActorValue::kHealth) +
@@ -51,6 +52,7 @@ namespace BloodMagic
 					break;
 				}
 			}
+			*/
 		}
 
 		static void UpdateSettings(RE::StaticFunctionTag*)

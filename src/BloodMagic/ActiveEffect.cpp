@@ -188,7 +188,7 @@ namespace BloodMagic
 		NegateHealthRestore(
 			a_this,
 			a_target->GetTargetAsActor(),
-			a_this->secondaryActorValue,
+			a_this->GetAdditionalActorValue(),
 			&a_this->secondaryAVWeight);
 		return _AdjustForPerks(a_this, a_caster, a_target);
 	}
